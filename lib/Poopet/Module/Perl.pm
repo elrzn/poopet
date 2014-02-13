@@ -19,6 +19,7 @@ echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
 echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.zshrc
 perlbrew install perl-${version}
 perlbrew switch perl-${version}
+perlbrew install-cpanm
 SCRIPT
 }
 
