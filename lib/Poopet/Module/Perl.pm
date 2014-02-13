@@ -8,7 +8,7 @@ has 'version', is => 'ro', isa => 'Str', default => sub { '5.18.2' };
 
 sub _build_name { 'perl' }
 
-sub _build_shit
+sub _build_script
 { my $self = shift;
   my $version = $self->version;
   <<SCRIPT

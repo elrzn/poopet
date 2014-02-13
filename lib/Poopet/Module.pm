@@ -6,13 +6,13 @@ extends 'Poopet';
 
 has 'name',         is => 'ro', isa => 'Str',     lazy_build => 1;
 has 'requirements', is => 'ro', isa => 'HashRef', lazy_build => 1;
-has 'shit',         is => 'ro', isa => 'Str',     lazy_build => 1;
+has 'script',       is => 'ro', isa => 'Str',     lazy_build => 1;
 
 sub _build_name { 'Unnamed module' }
 
 sub _build_requirements { [] }
 
-sub _build_shit { '' }
+sub _build_script { '' }
 
 sub exec
 { my $self = shift;

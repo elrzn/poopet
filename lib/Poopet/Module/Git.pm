@@ -6,7 +6,7 @@ extends 'Poopet::Module';
 
 sub _build_name { 'git' }
 
-sub _build_shit
+sub _build_script
 { my $self = shift;
   <<SCRIPT
 sudo apt-get install git
