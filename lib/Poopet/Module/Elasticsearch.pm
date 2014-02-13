@@ -8,7 +8,7 @@ sub _build_name { 'elasticsearch' }
 
 sub _build_requirements
 { {dirs    => [qw(~/opt)],
-   modules => [qw(Jdk)]};
+   modules => [qw(Jdk Curl)]};
 }
 
 sub _build_script

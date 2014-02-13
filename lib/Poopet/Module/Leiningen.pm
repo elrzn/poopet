@@ -8,7 +8,7 @@ sub _build_name { 'leiningen' }
 
 sub _build_requirements
 { {dirs    => [qw(~/bin)],
-   modules => [qw(Jdk)]};
+   modules => [qw(Jdk Curl)]};
 }
 
 sub _build_script
