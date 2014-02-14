@@ -10,8 +10,6 @@ sub available_modules
 
 sub install
 { my ($self, @modules) = @_;
-  my @req_dirs;
-  my @req_modules;
   my @available_modules = $self->available_modules;
   for my $m (@modules)
   { my $v;
