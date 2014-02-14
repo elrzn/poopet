@@ -1,6 +1,7 @@
 package Poopet::Module::Perl;
 use Moose;
 use namespace::autoclean;
+use IPC::Cmd qw(can_run);
 
 extends 'Poopet::Module';
 
@@ -11,16 +12,19 @@ sub _build_requirements { {modules => [qw(Curl)]} }
 sub _build_name { 'perl' }
 
 sub _build_script
-{ my $self = shift;
-  my $version = $self->version;
-  <<SCRIPT
-curl -L http://install.perlbrew.pl | bash
-echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
-echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.zshrc
-perlbrew install perl-${version}
-perlbrew switch perl-${version}
-perlbrew install-cpanm
-SCRIPT
+{ my $self     = shift;
+  my $version  = $self->version;
+  my $perlbrew = can_run 'perlbrew' ? '' : q{
+    curl -L http://install.perlbrew.pl | bash
+    echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
+    echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.zshrc
+  };
+  qq{
+    $perlbrew
+    perlbrew install perl-${version}
+    perlbrew switch perl-${version}
+    perlbrew install-cpanm
+  };
 }
 
 __PACKAGE__->meta->make_immutable;
