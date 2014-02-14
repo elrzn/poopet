@@ -4,9 +4,7 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_requirements {
-  {dirs => [qw(~/bin)], deps => [qw(Jdk Curl)]};
-}
+sub _build_deps { [qw/Jdk Curl/] }
 
 sub _build_script {
   <<SCRIPT
