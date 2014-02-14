@@ -2,8 +2,8 @@ package Poopet::Say;
 use Moose::Role;
 
 sub say
-{ my ($self, $str) = @_;
-  print sprintf qq(Poopet :: %s\n), $str;
+{ my ($self, @str) = @_;
+  print "Poopet :: ", @str, "\n";
 }
 
 1;
