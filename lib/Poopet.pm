@@ -24,9 +24,8 @@ sub _module_to_package { "Poopet::Module::$_[1]" }
 sub load_package {
   my ($self, $module, $version) = @_;
   die "Module '$module' is not available!" unless $self->module_is_available($module);
-  my $file = $self->_module_to_file($module);
-  require $file;
-  $self->_module_to_package($module)->new($version ? {version => $version} : {});
+  require $self->_module_to_file($module)
+    && $self->_module_to_package($module)->new($version ? {version => $version} : {});
 }
 
 sub _prepare_dependencies {
