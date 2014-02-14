@@ -42,7 +42,7 @@ sub _prepare_dependencies {
     $self->say("Preparing module $module");
     my $instance = $self->load_package($module, $version);    # Create pool for better performance?
     my $deps = $instance->deps || [];
-    $deps{$module} = $deps || [];
+    $deps{$module} = $deps;
     if (@$deps) {
       $self->say("Dependencies found: ", join ", ", @$deps);
       push @modules, @$deps if @$deps;
