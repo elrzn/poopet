@@ -27,7 +27,7 @@ sub install
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
     eval qq{
       use $package;
-      my \$p = ${package}->new(version => '\$v');
+      my \$p = ${package}->new(version => '$v');
       \$p->exec;
     };
   }
