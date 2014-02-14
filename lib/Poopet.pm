@@ -10,7 +10,6 @@ sub available_modules
 
 sub install
 { my ($self, @modules) = @_;
-  my @available_modules = $self->available_modules;
   my @req_dirs;
   my @req_modules;
   for my $m (@modules)
@@ -20,7 +19,7 @@ sub install
     { $v = $m->[1];
       $m = $m->[0];
     }
-    unless (grep { "${package}.pm" eq $_ } @available_modules)
+    unless (grep { "${package}.pm" eq $_ } $self->available_modules)
     { $self->say("Module '$m' is not available and won't be installed");
       next;
     }
