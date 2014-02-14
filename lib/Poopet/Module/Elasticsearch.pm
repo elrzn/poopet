@@ -4,8 +4,6 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_name { 'elasticsearch' }
-
 sub _build_requirements
 { {dirs    => [qw(~/opt)],
    modules => [qw(Jdk Curl)]};

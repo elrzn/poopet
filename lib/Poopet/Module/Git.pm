@@ -4,8 +4,6 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_name { 'git' }
-
 sub _build_script
 { my $self = shift;
   <<SCRIPT

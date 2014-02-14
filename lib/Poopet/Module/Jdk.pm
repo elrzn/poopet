@@ -4,8 +4,6 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_name { 'openjdk' }
-
 sub _build_script
 { <<SCRIPT
 sudo apt-get install openjdk-7-jre openjdk-7-jdk

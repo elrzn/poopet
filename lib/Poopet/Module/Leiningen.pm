@@ -4,8 +4,6 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_name { 'leiningen' }
-
 sub _build_requirements
 { {dirs    => [qw(~/bin)],
    modules => [qw(Jdk Curl)]};
