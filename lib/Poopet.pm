@@ -25,9 +25,10 @@ sub install
       next;
     }
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
+    my $with_version = $v ? q{version => '$v'} : q{};
     eval qq{
       use $package;
-      my \$p = ${package}->new(version => '$v');
+      my \$p = ${package}->new($with_version);
       \$p->exec;
     };
   }
