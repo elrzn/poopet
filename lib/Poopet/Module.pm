@@ -17,10 +17,10 @@ sub _build_script { '' }
 sub exec
 { my $self = shift;
   $self->say(sprintf 'Installing %s', $self->name);
-  my $code = $self->shit;
+  my $code = $self->script;
   qx($code)
    or die sprintf qq(Something went wrong while installing %s\n$!), $self->name;
-  qx(cd);    # Go to home directory after every install, just in case.
+  qx(cd ~);    # Go to home directory after every install, just in case.
 }
 
 __PACKAGE__->meta->make_immutable;
