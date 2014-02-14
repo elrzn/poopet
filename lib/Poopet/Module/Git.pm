@@ -4,8 +4,7 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_script
-{ my $self = shift;
+sub _build_script {
   <<SCRIPT
 sudo apt-get install git
 SCRIPT

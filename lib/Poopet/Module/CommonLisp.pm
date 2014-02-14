@@ -4,8 +4,8 @@ use namespace::autoclean;
 
 extends 'Poopet::Module';
 
-sub _build_script
-{ qq{
+sub _build_script {
+  qq{
     sudo apt-get install sbcl
   };
 }

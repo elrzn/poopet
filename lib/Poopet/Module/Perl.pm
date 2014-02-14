@@ -5,12 +5,12 @@ use IPC::Cmd qw(can_run);
 
 extends 'Poopet::Module';
 
-has 'version', is => 'ro', isa => 'Str', default => sub { '5.18.2' };
+has 'version', is => 'ro', isa => 'Str', default => sub {'5.18.2'};
 
-sub _build_requirements { {modules => [qw(Curl)]} }
+sub _build_requirements { {deps => [qw(Curl)]} }
 
-sub _build_script
-{ my $self     = shift;
+sub _build_script {
+  my $self     = shift;
   my $version  = $self->version;
   my $perlbrew = (can_run 'perlbrew') ? '# perlbrew already installed' : q{
     curl -L http://install.perlbrew.pl | bash

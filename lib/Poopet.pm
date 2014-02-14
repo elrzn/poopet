@@ -4,22 +4,22 @@ use namespace::autoclean;
 
 with 'Poopet::Say';
 
-sub available_modules
-{ map { "Poopet::Module::$_" } grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module);
+sub available_modules {
+  map {"Poopet::Module::$_"} grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module);
 }
 
-sub install
-{ my ($self, @modules) = @_;
+sub install {
+  my ($self, @modules) = @_;
   my @available_modules = $self->available_modules;
-  for my $m (@modules)
-  { my $v;
-    if (ref $m eq 'ARRAY')
-    { $v = $m->[1];
+  for my $m (@modules) {
+    my $v;
+    if (ref $m eq 'ARRAY') {
+      $v = $m->[1];
       $m = $m->[0];
     }
     my $package = "Poopet::Module::${m}";
-    unless (grep { "${package}.pm" eq $_ } @available_modules)
-    { $self->say("Module '$m' is not available and won't be installed");
+    unless (grep { "${package}.pm" eq $_ } @available_modules) {
+      $self->say("Module '$m' is not available and won't be installed");
       next;
     }
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
