@@ -2,7 +2,7 @@ package Poopet::Module;
 use Moose;
 use namespace::autoclean;
 
-extends 'Poopet';
+with 'Poopet::Say';
 
 has 'name',         is => 'ro', isa => 'Str',     lazy_build => 1;
 has 'requirements', is => 'ro', isa => 'HashRef', lazy_build => 1;
