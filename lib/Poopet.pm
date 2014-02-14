@@ -20,7 +20,7 @@ sub install
       $m = $m->[0];
     }
     unless (grep { "Poopet::Module::${m}.pm" eq $_ } @available_modules)
-    { $self->say("Module $m is not available and won't be installed");
+    { $self->say("Module '$m' is not available and won't be installed");
       next;
     }
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
