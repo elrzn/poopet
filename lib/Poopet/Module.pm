@@ -7,7 +7,7 @@ with 'Poopet::Say';
 has 'requirements', is => 'ro', isa => 'HashRef', lazy_build => 1;
 has 'script',       is => 'ro', isa => 'Str',     lazy_build => 1;
 
-sub _build_requirements { [] }
+sub _build_requirements { {} }
 
 sub _build_script {''}
 

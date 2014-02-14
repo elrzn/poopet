@@ -1,35 +1,69 @@
 package Poopet;
 use Moose;
 use namespace::autoclean;
+use Sort::Topological qw(toposort);
 
 with 'Poopet::Say';
 
-sub available_modules {
-  map {"Poopet::Module::$_"} grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module);
+has 'available_modules', is => 'ro', isa => 'ArrayRef[Str]', lazy_build => 1;
+
+sub _build_available_modules {
+  my $self = shift;
+  [map { substr($_, length($_) - 3, 3) eq '.pm' ? substr($_, 0, length($_) - 3) : $_ }
+      grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module)];
+}
+
+sub module_is_available {
+  my ($self, $module) = @_;
+  grep { $_ eq $module } @{$self->available_modules};
+}
+
+sub _module_to_file { "Poopet/Module/$_[1].pm" }
+
+sub _module_to_package { "Poopet::Module::$_[1]" }
+
+sub load_package {
+  my ($self, $module, $version) = @_;
+  if ($self->module_is_available($module)) {
+    my $file = $self->_module_to_file($module);
+    require $file;
+    return $self->_module_to_package($module)->new($version ? {version => $version} : {});
+  }
+  else {
+    die "Module '$module' is not available!";
+  }
+}
+
+sub _prepare_dependencies {
+  my ($self, @modules) = @_;
+  my %deps;
+  while (@modules) {
+    my $module = shift @modules;
+
+    # Handle version, if provided.
+    my $version;
+    ($version, $module) = ($module->[1], $module->[0]) if ref $module eq 'ARRAY';
+
+    $self->say("Preparing module $module");
+    my $instance = $self->load_package($module, $version);    # Create pool for better performance?
+    my $deps = $instance->requirements->{deps} || [];
+    $deps{$module} = $deps || [];
+    if (@$deps) {
+      $self->say("Dependencies found: ", join ", ", @$deps);
+      push @modules, @$deps if @$deps;
+    }
+  }
+  %deps;
+}
+
+sub _dependency_order {
+  my ($self, %deps) = @_;
+  reverse toposort sub { @{$deps{$_[0]} || []} }, [keys %deps];
 }
 
 sub install {
   my ($self, @modules) = @_;
-  my @available_modules = $self->available_modules;
-  for my $m (@modules) {
-    my $v;
-    if (ref $m eq 'ARRAY') {
-      $v = $m->[1];
-      $m = $m->[0];
-    }
-    my $package = "Poopet::Module::${m}";
-    unless (grep { "${package}.pm" eq $_ } @available_modules) {
-      $self->say("Module '$m' is not available and won't be installed");
-      next;
-    }
-    $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
-    my $with_version = $v ? q{version => '$v'} : q{};
-    eval qq{
-      use $package;
-      my \$p = ${package}->new($with_version);
-      \$p->exec;
-    };
-  }
+  my @with_deps = $self->_dependency_order($self->_prepare_dependencies(@modules));
 }
 
 __PACKAGE__->meta->make_immutable;
