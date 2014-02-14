@@ -12,14 +12,15 @@ sub install
 { my ($self, @modules) = @_;
   my @req_dirs;
   my @req_modules;
+  my @available_modules = $self->available_modules;
   for my $m (@modules)
-  { my $package = "Poopet::Module::${m}";
-    my $v;
+  { my $v;
     if (ref $m eq 'ARRAY')
     { $v = $m->[1];
       $m = $m->[0];
     }
-    unless (grep { "${package}.pm" eq $_ } $self->available_modules)
+    my $package = "Poopet::Module::${m}";
+    unless (grep { "${package}.pm" eq $_ } @available_modules)
     { $self->say("Module '$m' is not available and won't be installed");
       next;
     }
