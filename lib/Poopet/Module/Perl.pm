@@ -7,7 +7,7 @@ extends 'Poopet::Module';
 
 has 'version', is => 'ro', isa => 'Str', default => sub {'5.18.2'};
 
-sub _build_requirements { {deps => [qw(Curl)]} }
+sub _build_deps { [qw/Curl/] }
 
 sub _build_script {
   my $self     = shift;
