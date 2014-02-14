@@ -24,6 +24,12 @@ sub install
       next;
     }
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
+    my $package = "Poopet::Module::${m}";
+    eval qq{
+      use $package;
+      my \$p = ${package}->new(version => '\$v');
+      \$p->exec;
+    };
   }
 }
 
