@@ -8,7 +8,6 @@ with 'Poopet::Say';
 has 'available_modules', is => 'ro', isa => 'ArrayRef[Str]', lazy_build => 1;
 
 sub _build_available_modules {
-  my $self = shift;
   [map { substr($_, length($_) - 3, 3) eq '.pm' ? substr($_, 0, length($_) - 3) : $_ }
       grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module)];
 }
