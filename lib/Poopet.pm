@@ -7,4 +7,8 @@ sub say
   print sprintf qq(Poopet :: %s\n), $str;
 }
 
+sub available_modules
+{ map { "Poopet::Module::$_" } grep /.pm/, split /\s/, qx(ls -l ./lib/Poopet/Module);
+}
+
 __PACKAGE__->meta->make_immutable;
