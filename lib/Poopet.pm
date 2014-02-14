@@ -14,17 +14,17 @@ sub install
   my @req_dirs;
   my @req_modules;
   for my $m (@modules)
-  { my $v;
+  { my $package = "Poopet::Module::${m}";
+    my $v;
     if (ref $m eq 'ARRAY')
     { $v = $m->[1];
       $m = $m->[0];
     }
-    unless (grep { "Poopet::Module::${m}.pm" eq $_ } @available_modules)
+    unless (grep { "${package}.pm" eq $_ } @available_modules)
     { $self->say("Module '$m' is not available and won't be installed");
       next;
     }
     $self->say("Installing module '$m'", $v ? " with version '$v'" : '');
-    my $package = "Poopet::Module::${m}";
     eval qq{
       use $package;
       my \$p = ${package}->new(version => '\$v');
