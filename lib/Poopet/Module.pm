@@ -4,7 +4,7 @@ use namespace::autoclean;
 
 with 'Poopet::Say';
 
-has 'deps',   is => 'ro', isa => 'ArrayRef[Str]', lazy_build => 1;
+has 'deps',   is => 'ro', isa => 'ArrayRef[Any]', lazy_build => 1;
 has 'script', is => 'ro', isa => 'Str',           lazy_build => 1;
 
 sub _build_deps { [] }
