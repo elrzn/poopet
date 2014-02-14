@@ -14,7 +14,7 @@ sub _build_name { 'perl' }
 sub _build_script
 { my $self     = shift;
   my $version  = $self->version;
-  my $perlbrew = can_run 'perlbrew' ? '' : q{
+  my $perlbrew = (can_run 'perlbrew') ? '# perlbrew already installed' : q{
     curl -L http://install.perlbrew.pl | bash
     echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
     echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.zshrc
